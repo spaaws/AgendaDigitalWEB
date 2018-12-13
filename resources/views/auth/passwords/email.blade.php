@@ -46,7 +46,7 @@
                 <div class="row">
                   <div class="input-field col s12 center">
                     <h4>Redefinir Senha</h4>
-                    <p class="center">Você pode redefinir sua senha.</p>
+                    <p class="center">Você pode redefinir sua senha agora.</p>
                   </div>
                 </div>
                 <div class="row margin">

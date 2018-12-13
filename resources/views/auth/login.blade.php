@@ -52,7 +52,7 @@
 
           <div class="row margin">
             <div class="input-field col s12">
-              <i class="material-icons prefix pt-5">person_outline</i>
+              <i class="material-icons prefix pt-5">email</i>
               <label for="username" class="center-align">E-mail</label>
               <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                 @if ($errors->has('email'))
