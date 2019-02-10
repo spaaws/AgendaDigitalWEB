@@ -638,12 +638,11 @@ class TestResponse
      */
     public function assertJsonValidationErrors($keys)
     {
-        $errors = $this->json()['errors'] ?? [];
+        $errors = $this->json()['errors'];
 
         foreach (Arr::wrap($keys) as $key) {
-            PHPUnit::assertArrayHasKey(
-                $key,
-                $errors,
+            PHPUnit::assertTrue(
+                isset($errors[$key]),
                 "Failed to find a validation error in the response for key: '{$key}'"
             );
         }
@@ -657,7 +656,7 @@ class TestResponse
      * @param  string|array  $keys
      * @return $this
      */
-    public function assertJsonMissingValidationErrors($keys = null)
+    public function assertJsonMissingValidationErrors($keys)
     {
         $json = $this->json();
 
@@ -668,13 +667,6 @@ class TestResponse
         }
 
         $errors = $json['errors'];
-
-        if (is_null($keys) && count($errors) > 0) {
-            PHPUnit::fail(
-                'Response has unexpected validation errors: '.PHP_EOL.PHP_EOL.
-                json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-            );
-        }
 
         foreach (Arr::wrap($keys) as $key) {
             PHPUnit::assertFalse(
@@ -909,12 +901,6 @@ class TestResponse
             return $this->assertSessionMissing('errors');
         }
 
-        if (is_null($this->session()->get('errors'))) {
-            PHPUnit::assertTrue(true);
-
-            return $this;
-        }
-
         $errors = $this->session()->get('errors')->getBag($errorBag);
 
         foreach ($keys as $key => $value) {
@@ -942,7 +928,7 @@ class TestResponse
         PHPUnit::assertFalse(
             $hasErrors,
             'Session has unexpected errors: '.PHP_EOL.PHP_EOL.
-            json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
 
         return $this;

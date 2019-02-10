@@ -37,7 +37,7 @@ class ModelMakeCommand extends GeneratorCommand
     public function handle()
     {
         if (parent::handle() === false && ! $this->option('force')) {
-            return false;
+            return;
         }
 
         if ($this->option('all')) {

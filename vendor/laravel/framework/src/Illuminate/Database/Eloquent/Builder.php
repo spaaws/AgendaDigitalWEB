@@ -3,7 +3,6 @@
 namespace Illuminate\Database\Eloquent;
 
 use Closure;
-use Exception;
 use BadMethodCallException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -15,8 +14,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * @property-read HigherOrderBuilderProxy $orWhere
- *
  * @mixin \Illuminate\Database\Query\Builder
  */
 class Builder
@@ -907,7 +904,7 @@ class Builder
      * Call the given local model scopes.
      *
      * @param  array  $scopes
-     * @return static|mixed
+     * @return mixed
      */
     public function scopes(array $scopes)
     {
@@ -936,7 +933,7 @@ class Builder
     /**
      * Apply the scopes to the Eloquent builder instance and return it.
      *
-     * @return static
+     * @return \Illuminate\Database\Eloquent\Builder|static
      */
     public function applyScopes()
     {
@@ -1282,23 +1279,6 @@ class Builder
     public function getMacro($name)
     {
         return Arr::get($this->localMacros, $name);
-    }
-
-    /**
-     * Dynamically access builder proxies.
-     *
-     * @param  string  $key
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function __get($key)
-    {
-        if ($key === 'orWhere') {
-            return new HigherOrderBuilderProxy($this, $key);
-        }
-
-        throw new Exception("Property [{$key}] does not exist on the Eloquent builder instance.");
     }
 
     /**

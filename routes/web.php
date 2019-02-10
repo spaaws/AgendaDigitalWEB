@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+
+Route :: resource ('/contatos', 'ContatoController');
+Route :: resource ('/perfil', 'PerfilController');
+
+Route::get('/login/facebook', 'SocialAuthController@loginFacebook');
+Route::get('/callback/facebook', 'SocialAuthController@callbackFacebook');
+Route::get('/logout/facebook', 'SocialAuthController@logoutFacebook');
+
+Route::get('/login/google', 'SocialAuthController@loginGoogle');
+Route::get('/callback/google', 'SocialAuthController@callbackGoogle');
+Route::get('/logout/google', 'SocialAuthController@logoutGoogle');
+
+Route::get('/generate-docx', 'PerfilController@generateDocx');

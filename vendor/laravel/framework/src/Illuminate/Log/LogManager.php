@@ -15,7 +15,6 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\SlackWebhookHandler;
-use Monolog\Handler\WhatFailureGroupHandler;
 
 class LogManager implements LoggerInterface
 {
@@ -217,10 +216,6 @@ class LogManager implements LoggerInterface
             return $this->channel($channel)->getHandlers();
         })->all();
 
-        if ($config['ignore_exceptions'] ?? false) {
-            $handlers = [new WhatFailureGroupHandler($handlers)];
-        }
-
         return new Monolog($this->parseChannel($config), $handlers);
     }
 
@@ -237,7 +232,7 @@ class LogManager implements LoggerInterface
                 new StreamHandler(
                     $config['path'], $this->level($config),
                     $config['bubble'] ?? true, $config['permission'] ?? null, $config['locking'] ?? false
-                ), $config
+                )
             ),
         ]);
     }
@@ -254,7 +249,7 @@ class LogManager implements LoggerInterface
             $this->prepareHandler(new RotatingFileHandler(
                 $config['path'], $config['days'] ?? 7, $this->level($config),
                 $config['bubble'] ?? true, $config['permission'] ?? null, $config['locking'] ?? false
-            ), $config),
+            )),
         ]);
     }
 
@@ -293,7 +288,7 @@ class LogManager implements LoggerInterface
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(new SyslogHandler(
                 $this->app['config']['app.name'], $config['facility'] ?? LOG_USER, $this->level($config)
-            ), $config),
+            )),
         ]);
     }
 
