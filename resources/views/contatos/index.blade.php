@@ -13,21 +13,21 @@
         <li class="active">Contatos</li>
       </ol>
     </section>
-    
+
     @include('layouts._includes.alerts')
     <section class="content">
       <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Contatos cadastrados.</h3>
             <div class="pull-right box-tools">
-              <a href="{{ route('contatos.create') }}"> 
+              <a href="{{ route('contatos.create') }}">
                 <button type="button" class="btn btn-info">
                   Add Contato
                 </button>
               </a>
             </div>
           </div>
-        
+
         <!-- /.box-header -->
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">
@@ -75,13 +75,13 @@
                           <a href="#" class="btn btn-xs btn-social-icon btn-twitter disabled"><i class="fa fa-twitter"></i></a>
                         @else
                           <a target="_blank" href="{{ $registro->twitter }}" class="btn btn-xs btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-                        @endif 
+                        @endif
 
                         @if($registro->instagram == '')
                           <a href="#" class="btn btn-xs btn-social-icon btn-instagram disabled"><i class="fa fa-instagram"></i></a>
                         @else
                           <a target="_blank" href="{{ $registro->instagram }}" class="btn btn-xs btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
-                        @endif  
+                        @endif
                     </td>
 										<td class="text-center">
 											{{--<form action="{{ route('contatos.destroy',$registro->id) }}" method="POST">
@@ -89,12 +89,12 @@
                         {{csrf_field()}}--}}
                         <a href="{{ route('contatos.show',$registro->id) }}"><button class="btn btn-xs btn-primary" type="button"><em class="fa fa-eye"></em></button></a>
                         <a href="#"><button class="btn btn-xs bg-maroon" type="button"><em class="fa fa-print"></em></button></a>
-                        <a href="{{ route('contatos.edit',$registro->id) }}"><button class="btn btn-xs btn-warning" type="button"><em class="fa fa-pencil"></em></button></a>             
+                        <a href="{{ route('contatos.edit',$registro->id) }}"><button class="btn btn-xs btn-warning" type="button"><em class="fa fa-pencil"></em></button></a>
                         <button class="btn btn-xs btn-danger" data-contatoid={{$registro->id}} data-toggle="modal" data-target="#delete" type="submit"><em class="fa fa-trash"></em></button>
                       {{--</form> --}}
                     </td>
 									</tr>
-								@endforeach         
+								@endforeach
             </tbody>
           </table>
         </div>
@@ -116,7 +116,7 @@
           {{method_field('delete')}}
           {{csrf_field()}}
           <div class="modal-body">
-            <p>{{$registro->id}}</p>
+
             <p></p>
             <input type="hidden" name="delete_contato" id="contato_id" value="">
           </div>
