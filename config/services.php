@@ -49,7 +49,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_KEY','248989799507-7s77sur91v4ciov3lbh7soonmckb1gv2.apps.googleusercontent.com'),
         'client_secret' => env('GOOGLE_SECRET','VUTTYWa6YUAuHfLfgMixD54d'),
-        'redirect' => 'http://localhost:8000/callback/google',
+        'redirect' => 'http://www.agendadigital.tk/callback/google',
     ],
 
 ];
