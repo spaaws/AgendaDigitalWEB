@@ -20,7 +20,7 @@ class PerfilController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +42,14 @@ class PerfilController extends Controller
     {
         $user = auth()->user();
         $data = $request->all();
-        if ($data['password'] != null)
+        if ($data['password'] != null){
+            $validatedData = $request->validate([
+            //'current-password'  => 'required',
+            'password'=> 'required|string|min:6|confirmed',
+            ]);
             $data['password'] = Hash::make($data['password']);
-        else 
+        }
+        else
             unset($data['password']);
 
             //Código para fazer upload de foto
@@ -55,7 +60,7 @@ class PerfilController extends Controller
                     $extension  = $request->avatar->extension();
                     $nomeFile   =  "{$nomeAvatar}.{$extension}";
                     $data['avatar'] = $nomeFile;
-                    
+
                     $upload = $request->avatar->storeAs('users',$nomeFile);
 
                     if (!$upload)
@@ -63,24 +68,26 @@ class PerfilController extends Controller
                                     ->back()
                                     ->whithError('Falha ao fazer upload da imagem.');
                 }
-                
+
             $update = $user->update($data);
 
         if($update)
             return redirect()
                         ->route('perfil.index')
                         ->with('success', 'Sucesso ao atualizar!');
-            
+
         return redirect()
                     ->back()
                     ->with('error', 'Falha ao atualizar!');
+
+
 
     }
 
     public function generateDocx()
     {
         $user = auth()->user();
-        
+
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
 
@@ -105,6 +112,6 @@ class PerfilController extends Controller
         } catch (Exception $e) {
         }
         return response()->download(storage_path('helloWorld.docx'));
-        
+
     }
 }

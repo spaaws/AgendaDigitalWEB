@@ -31,7 +31,7 @@
         <div class="modal-body">
             <ul>
               <li>É necessário que você informe uma senha para completar o seu cadastro.</li>
-            </ul> 
+            </ul>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Fechar</button>
@@ -47,13 +47,16 @@
 
   <section class="content">
     <form action="{{ route('perfil.update',Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
-      {{ csrf_field() }}
+      @csrf
       <input type="hidden" name="_method" value="put">
       <div class="row">
         <div class="col-md-3">
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
+
+                <!-- Se a imagem nao estiver abrindo tem que criar um link
+                    com o storage com o comando -> php artisan storage:link-->
 
                 @if (substr(auth()->user()->avatar,0, 4) == 'http')
                   <img class="profile-user-img img-responsive img-circle display: block" src="{{ Auth::user()->avatar }}" alt="Avatar">
@@ -65,7 +68,7 @@
               <div class="form-group">
                 <div class="btn btn-primary btn-file btn-block">
                     <i class="fa fa-upload"></i> Carregar Foto
-                    <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg">                  
+                    <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg">
                 </div>
                 <p class="help-block">Max. 4MB</p>
               </div>
@@ -123,35 +126,50 @@
                   <div class="col-xs-12">
                     <label for="email">E-mail
                     </label>
-                    <input style="text-transform:lowercase" onkeyup="minuscula(this)" name="email" id="email" type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ isset(Auth::user()->email) ? Auth::user()->email : '' }}" reqired disabled>
+                    <input style="text-transform:lowercase" onkeyup="minuscula(this)" name="email" id="email" type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ isset(Auth::user()->email) ? Auth::user()->email : '' }}" required disabled>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
                     <label for="profissao">Profissão
                     </label>
-                    <input name="profissao" id="profissao" type="text" class="form-control{{ $errors->has('profissao') ? ' is-invalid' : '' }}" value="{{ isset(Auth::user()->profissao) ? Auth::user()->profissao : '' }}" reqired>
+                    <input name="profissao" id="profissao" type="text" class="form-control{{ $errors->has('profissao') ? ' is-invalid' : '' }}" value="{{ isset(Auth::user()->profissao) ? Auth::user()->profissao : '' }}">
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-xs-6">
-                    <label for="email">Senha
-                    </label>
-                    <input id="password" name="password" type="password" placeholder="Senha" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}">
-                  </div>
-                  <div class="col-xs-6">
-                    <label for="email">Confirme a Senha
-                    </label>
-                    <input id="password-confirm" name="password_confirmation" type="password" placeholder="Repita a Senha" class="form-control {{ $errors->has('password-confirm') ? ' is-invalid' : '' }}">
-                  </div>
-                </div>
+                @if(auth()->user()->password == '')
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label for="email">Senha</label>
+                            <input id="password" name="password" type="password" placeholder="Senha" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" required>
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="email">Confirme a Senha</label>
+                            <input id="password-confirm" name="password_confirmation" type="password" placeholder="Repita a Senha" class="form-control" required>
+                        </div>
+                    </div>
+                @else
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label for="email">Senha</label>
+                            <input id="password" name="password" type="password" placeholder="Senha" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}">
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="email">Confirme a Senha</label>
+                            <input id="password-confirm" name="password_confirmation" type="password" placeholder="Repita a Senha" class="form-control" >
+                        </div>
+                    </div>
+                @endif
               </div>
+              @if ($errors->has('password'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+              @endif
               <div class="box-footer">
-                <button type="submit" class="btn btn-success pull-right">Atualizar
-                </button>
-              </div>    
-            </section> 
-          </div>          
+                <button type="submit" class="btn btn-success pull-right">{{ __('Atualizar') }}</button>
+              </div>
+            </section>
+          </div>
           <!-- /.nav-tabs-custom -->
         </div>
         <!-- /.col -->

@@ -19,8 +19,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route :: resource ('/contatos', 'ContatoController');
-Route :: resource ('/perfil', 'PerfilController');
+Route :: resource ('/contatos', 'ContatoController')->middleware('verified');
+Route :: resource ('/perfil', 'PerfilController')->middleware('verified');
 
 Route::get('/login/facebook', 'SocialAuthController@loginFacebook');
 Route::get('/callback/facebook', 'SocialAuthController@callbackFacebook');

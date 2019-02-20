@@ -52,7 +52,7 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input id="password-confirm" name="password_confirmation" type="password" placeholder="Repita a Senha" class="form-control {{ $errors->has('password-confirm') ? ' is-invalid' : '' }}" name="password-confirm" required>
+                <input id="password-confirm" name="password_confirmation" type="password" placeholder="Repita a Senha" class="form-control {{ $errors->has('password-confirm') ? ' is-invalid' : '' }}"  required>
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
 
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <!-- /.col -->
-                <div class="col-xs-4">  
+                <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Cadastrar</button>
                 </div>
                 <!-- /.col -->
